@@ -1,0 +1,26 @@
+name: Generar Notas de Lanzamiento
+
+on:
+  push:
+    branches:
+      - master # o la rama principal de tu repositorio
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v2
+        
+      - name: Configurar Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          
+      - name: Instalar dependencias
+        run: npm install
+        
+      - name: Generar notas de lanzamiento
+        run: npx standard-version
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
